@@ -5,6 +5,7 @@
            // $drink_name = $_GET['drink']; 
  //$drink_name = $_GET['drink']; 
  $drink_name = $_GET['drink'];
+ $reset = $_GET['reset'];
 
             $server = "localhost";
             $username = "root";
@@ -22,17 +23,38 @@
            $result1= mysqli_query($conn, $view_table);
            $largest_count="SELECT drink_name FROM drink_counts ORDER BY count DESC LIMIT 1";
             $result2= mysqli_query($conn, $largest_count);
-     
+       if ($reset == 'reset')
+         {
+           $sql3="UPDATE drink_counts SET count=0";
+            $result3= mysqli_query($conn, $sql3);
+            $reset="nres";
+        } 
         ?>
+        
     </head>
   <body>
 
+
 <?php
  while ($row = $result2-> fetch_assoc()) {
-echo "<h1> $row[drink_name] is the most popular drink </h1>";
-      }
-?>
+    $drink=  $row['drink_name'];  
+if ($drink == "COKE") {
+   $color = "red";
+} else if ($drink == "SPRITE") {
+   $color = "green";
 
+} else if ($drink == "WATER") { 
+   $color = "blue";
+
+} else {
+  $color = "black";
+}
+
+echo "<h1 style= 'color: $color; text-align:center;'> $drink is most popular drink </h1>";
+
+
+}
+?>         
        <table class="center">
        <tr>
           <th>Drink Name</th>
@@ -50,11 +72,6 @@ echo "<h1> $row[drink_name] is the most popular drink </h1>";
 //	}
  ?> 
     </table> 
-<?php
- while ($row = $result2-> fetch_assoc()) {
-echo "<h1> $row[drink_name] is the most popular drink </h1>";
-      }
-?>                 
     </body>
 </html>
 
