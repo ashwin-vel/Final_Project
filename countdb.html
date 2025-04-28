@@ -8,10 +8,42 @@ table, th, td {
 table.center {
   margin-left: auto;
   margin-right: auto;
+
+  }
+.button {
+  text-align: center;
+
+  padding: 14px 25px;
+   position: absolute;
+   margin:0;
+  top:40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: cyan; 
+  background-color: red;
+  font-weight: bold;
 }
-	  h1 {
-		  text-align:center;
-	  }
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+    float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);   
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+	
+
 </style>
 <head>
         <title>Most Popular Drink</title>
@@ -24,17 +56,22 @@ table.center {
 	  async function takedata() {
              const resp =  await fetch("/countdrink.php");
              const data = await resp.text();
-
 	document.getElementById('tablecount').innerHTML = data;
 	  }
              
              takedata();
 	     setInterval(takedata,1000);
-	</script>
+	</script>	    
+  <button onclick="myFunction()"; class="button";> Reset </button>
 
-		    
-            
 
-    </body> 
+<script>
+async function myFunction() {
+   const resp1= await fetch("countdrink.php?reset=reset");
+   takedata();  
+}
+</script>
+<a href="d3.html" target="_blank">SafeFlow WebPage</a>            
+  </body> 
 
 </html>
