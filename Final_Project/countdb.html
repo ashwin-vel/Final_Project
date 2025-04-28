@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border: 1px solid;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+	  h1 {
+		  text-align:center;
+	  }
+</style>
+<head>
+        <title>Most Popular Drink</title>
+       
+    </head>
+  <body>
+	  <div id="tablecount"></div>
+
+	<script>
+	  async function takedata() {
+             const resp =  await fetch("/countdrink.php");
+             const data = await resp.text();
+
+	document.getElementById('tablecount').innerHTML = data;
+	  }
+             
+             takedata();
+	     setInterval(takedata,1000);
+	</script>
+
+		    
+            
+
+    </body> 
+
+</html>
