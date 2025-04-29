@@ -39,12 +39,12 @@
  while ($row = $result2-> fetch_assoc()) {
     $drink=  $row['drink_name'];  
 if ($drink == "COKE") {
-   $color = "red";
+   $color = "#F40009";
 } else if ($drink == "SPRITE") {
-   $color = "green";
+   $color = "lime";
 
 } else if ($drink == "WATER") { 
-   $color = "blue";
+   $color = "aqua";
 
 } else {
   $color = "black";

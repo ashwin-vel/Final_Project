@@ -39,7 +39,7 @@ if (isset($_GET['drink'])) {
 $serial = fopen($serial_port, "r");
 //stream_set_blocking($serial, false);
 
-$response = fread($serial, 1);
+$response = fread($serial,1);
 //fclose($serial);
 // Process AVR response
 $mes = "Unknown Response";
@@ -53,11 +53,9 @@ switch (trim($response)) {
    case 'J': $mes = "Place Cup"; break;
    case 'D': $mes = "DONE!!!"; break;
    case 'F': $mes = "Overflow/Spillage (Clean UP)"; break;
-   case 'G': $mes = "Stopped"; break;
+   //case 'G': $mes = "Stopped"; break;
    default:  $mes = "Select Drink :)";
 }
 // Return JSON response
 echo json_encode(['status' => 'success', 'message' => $mes]);
-//fflush($serial);
-//header("refresh: 1;")
 ?>

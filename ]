@@ -3,22 +3,23 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drink Dispenser</title>
-
+ 
   <style>
+    /* style the whole page */
     body {
       margin: 0;
       font-family: "Times New Roman", serif;
       background-image: url("safeflow.png");
       background-repeat: no-repeat;
       background-size: cover;
-   background-position: center;
-
+      background-position: center;
       height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
+ 
+    /* style the scrolling title */
     h1 {
       margin: 20px 0;
       font-size: 2.5em;
@@ -29,18 +30,20 @@
       box-shadow: 4px 4px 8px green;
       animation: seldri 15s linear infinite alternate;
     }
-
+ 
     @keyframes seldri {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
-
+ 
+    /* container for drink buttons */
     .container {
       display: flex;
       gap: 20px;
       margin-top: 40px;
     }
-
+ 
+    /* style for each drink button */
     .drink-button {
       width: 120px;
       height: 120px;
@@ -48,19 +51,22 @@
       border-radius: 50%;
       background-size: cover;
       background-position: center;
-      box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 6px 6px 10px red;
       cursor: pointer;
       transition: transform 0.5s;
     }
-
+ 
+    /* button hover effect */
     .drink-button:hover {
       transform: scale(1.1);
     }
-
+ 
+    /* background images for drinks */
     #coke { background-image: url('coke-logo.png'); }
     #sprite { background-image: url('sprite-logo.png'); }
     #water { background-image: url('water-logo.png'); }
-
+ 
+    /* style for system status */
     #status {
       margin-top: 30px;
       padding: 10px 20px;
@@ -70,63 +76,84 @@
       box-shadow: 3px 3px 7px green;
       font-size: 1.0em;
     }
-
+ 
+    /* disabled button appearance */
     .disabled {
       opacity: 0.5;
       pointer-events: none;
     }
-  </style>
+ 
+    /* style for stop button */
+    .stop-button {
+      margin-top: 160px;
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      font-style: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 10px 10px 10px blue;
+    }
+    .stop-button:hover {
+	    transform: scale(1.1);
+       }
 
+  </style>
+ 
   <script>
+    /* send selected drink to server */
     async function senddrinkc(drink) {
-     
         const response = await fetch(`/send_command.php?drink=${drink}`);
         const countdrink = await fetch(`/countdrink.php?drink=${drink}`);
         const data = await response.json();
         modifymess(data.message);
-       
     }
-async function count(drink) {
-     const countdrink = await fetch(`/countdrink.php?drink=${drink}`);
-}
-
+ 
+    /* get the system status info */
     async function takeinfo() {
-    
-         const response = await fetch('/send_command.php');
+        const response = await fetch('/send_command.php');
         const data = await response.json();
         modifymess(data.message);
-     
     }
-
+ 
+    /* modify the message display */
     function modifymess(statusmess) {
       const status = document.getElementById("status");
       status.textContent = statusmess;
-
-      buttons = document.querySelectorAll(".drink-button");
-      errormess = ["Fill Up Coke", "Fill Up Sprite", "Fill Up Water", "Place Cup", "DONE!!!", "Overflow/Spillage (Clean UP)"];
-
-      buttons.forEach(buttom => {
-        buttom.classList.toggle('disabled', errormess.includes(statusmess));
+ 
+      const buttons = document.querySelectorAll(".drink-button");
+      const errormess = ["Unable to open serial port","Fill Up Coke", "Fill Up Sprite", "Fill Up Water", "Place Cup", "DONE!!!", "Overflow/Spillage (Clean UP)", "Stopped"];
+ 
+      buttons.forEach(button => {
+        button.classList.toggle('disabled', errormess.includes(statusmess));
       });
     }
-
-    setInterval(takeinfo, 2000); // Every 2 seconds
+ 
+ 
+ 
+    /* keep updating status every 2 seconds */
+    setInterval(takeinfo, 1000);
   </script>
-
+ 
 </head>
 <body>
-
+ 
+  <!-- page heading -->
   <h1>Select Your Drink</h1>
-
+ 
+  <!-- container with drink buttons -->
   <div class="container">
     <button id="coke" class="drink-button" onclick="senddrinkc('COKE')"></button>
-    <button id="sprite" class="drink-button" onclick=" senddrinkc ('SPRITE')"></button>
-    <button id="water" class="drink-button" onclick=" senddrinkc ('WATER')"></button>
+    <button id="sprite" class="drink-button" onclick="senddrinkc('SPRITE')"></button>
+    <button id="water" class="drink-button" onclick="senddrinkc('WATER')"></button>
   </div>
-
+ 
+  <!-- system status display -->
   <div id="status">Waiting for selection...</div>
-
+ 
+  <!-- stop button -->
+  <button class="stop-button" onclick="senddrinkc('STOP')">Stop</button>
+ 
 </body>
 </html>
-
-

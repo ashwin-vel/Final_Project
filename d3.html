@@ -123,7 +123,7 @@
       status.textContent = statusmess;
  
       const buttons = document.querySelectorAll(".drink-button");
-      const errormess = ["Unable to open serial port","Fill Up Coke", "Fill Up Sprite", "Fill Up Water", "Place Cup", "DONE!!!", "Overflow/Spillage (Clean UP)", "Stopped"];
+      const errormess = ["Unable to open serial port","Fill Up Coke", "Fill Up Sprite", "Fill Up Water", "Place Cup", "DONE!!!", "Overflow/Spillage (Clean UP)"];
  
       buttons.forEach(button => {
         button.classList.toggle('disabled', errormess.includes(statusmess));
@@ -133,7 +133,7 @@
  
  
     /* keep updating status every 2 seconds */
-    setInterval(takeinfo, 2000);
+    setInterval(takeinfo, 1000);
   </script>
  
 </head>
